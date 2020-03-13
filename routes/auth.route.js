@@ -1,6 +1,8 @@
 const { Router } = require('express')
 const bcrypt = require('bcryptjs')
 const { check, validationResult } = require("express-validator")
+const JWT = require("jsonwebtoken")
+const config = require('config')
 
 const router = Router()
 
@@ -43,11 +45,12 @@ router.post(
 })
 
 router.post(
-    '/login', 
+    '/login',
     [
         check('email', "Email incorrect").normalizeEmail().isEmail(),
-        check('password', "Password should exist").isExist()
+        check('password', "Password should exist").isEmpty()
     ], 
+
 async (req, res) => {
     const errors = validationResult(req)
 
@@ -72,6 +75,12 @@ async (req, res) => {
         if(!isMatch){
             return res.status(400).json({message: "email or password is incorrect"})
         }
+
+        const token = JWT.sign(
+            {userId: user.id},
+            config.get('jwtSecret'),
+            {expiresIn: '1h'}
+        )
 
         res.status(200).json({message: "login success"})
 
