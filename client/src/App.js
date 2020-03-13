@@ -5,7 +5,7 @@ import {BrowserRouter} from "react-router-dom"
 import "materialize-css"
 
 function App() {
-  const routes = useRoutes(true)
+  const routes = useRoutes(false)
   return (
     <div className="container">
       <header className="App-header">
