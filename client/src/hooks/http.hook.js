@@ -16,7 +16,7 @@ export const useHttp = () => {
       const data = await response.json()
       
       if(!response.ok){
-        setError(data.message || "something went wrong")
+        setError(data.message || "Response from register isn't ok")
         throw new Error( data.message || "something went wrong")
       }
       
