@@ -30,6 +30,7 @@ export const useHttp = () => {
     }
   }, [])
 
+  //use callback because Error was cleared to fast
   const clearError = useCallback(() => {
     setError(null)
   }, [])

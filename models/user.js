@@ -1,16 +1,22 @@
-const {Schema, model, Types} = require('mongoose')
+const { Schema, model, Types } = require('mongoose')
 
 const schema = new Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    links: [{type: Types.ObjectId, ref: "Links"}]
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  links: [{ type: Types.ObjectId, ref: "Links" }]
+}, {
+  writeConcern: {
+    w: 'majority',
+    j: true,
+    wtimeout: 1000
+  }
 })
 
 module.exports = model("User", schema)
